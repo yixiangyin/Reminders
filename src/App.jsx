@@ -9,11 +9,27 @@ const createInitialTodos = () => {
 };
 
 const App = () => {
-  const [ todos, setTodos ] = useState(createInitialTodos);
+  const [todos, setTodos] = useState(createInitialTodos);
+  const [text, setText] = useState("");
   return (
     <>
       <div>
         <h1>Reminders</h1>
+        <input value={text} onChange={(e) => setText(e.target.value)} />
+        <button
+          onClick={() => {
+            setText("");
+            setTodos([
+              {
+                id: todos.length,
+                text: text,
+              },
+              ...todos,
+            ]);
+          }}
+        >
+          Add
+        </button>
         <ul>
           {todos.map((item) => (
             <li key={item.id}>{item.text}</li>
