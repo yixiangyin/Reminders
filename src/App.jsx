@@ -9,13 +9,16 @@ const createInitialTodos = () => {
 }
 
 const App = () => {
+  const [showAll, setShowAll] = useState(true)
   const [todos, setTodos] = useState(createInitialTodos)
   const [text, setText] = useState("")
-  const filteredTodos = todos.filter(todo => !todo.isComplete);
+  const filteredTodos = showAll
+    ? todos
+    : todos.filter((todo) => !todo.isComplete)
   const toggle = (id) => {
-    const todo = todos.find((todo) => String(todo.id) === String(id));
-    const toggledTodo = {...todo, isComplete: !todo.isComplete}
-    setTodos(todos.map(t => t.id == toggledTodo.id ? toggledTodo: t))
+    const todo = todos.find((todo) => String(todo.id) === String(id))
+    const toggledTodo = { ...todo, isComplete: !todo.isComplete }
+    setTodos(todos.map((t) => (t.id == toggledTodo.id ? toggledTodo : t)))
   }
   const addTodo = () => {
     setTodos([
@@ -31,6 +34,11 @@ const App = () => {
     <>
       <div>
         <h1>Reminders</h1>
+        <div>
+          <button onClick={() => setShowAll(!showAll)}>
+            {showAll ? "hide completed" : "show all"}
+          </button>
+        </div>
         <input value={text} onChange={(e) => setText(e.target.value)} />
         <button onClick={addTodo}>Add</button>
         <ul>
