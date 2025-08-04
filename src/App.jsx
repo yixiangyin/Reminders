@@ -14,10 +14,11 @@ const App = (props) => {
     const toggledTodo = { ...todo, isComplete: !todo.isComplete }
     setTodos(todos.map((t) => (t.id == toggledTodo.id ? toggledTodo : t)))
   }
-  const addTodo = () => {
+  const addTodo = (event) => {
+    event.preventDefault()
     setTodos([
       {
-        id: todos.length,
+        id: todos.length + 1,
         content: newTodo,
         isComplete: false,
       },
@@ -34,11 +35,14 @@ const App = (props) => {
             {showAll ? "hide completed" : "show all"}
           </button>
         </div>
-        <input value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
-        <button onClick={addTodo}>Add</button>
+        <form onSubmit={addTodo}>
+          <input value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
+          <button type="submit">Add</button>
+        </form>
         <ul>
           {filteredTodos.map((todo) => (
             <Todo
+              key={todo.id}
               toggle={() => toggle(todo.id)}
               content={todo.content}
               isComplete={todo.isComplete}
