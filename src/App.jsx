@@ -15,6 +15,7 @@ const App = () => {
   const filteredTodos = showAll
     ? todos
     : todos.filter((todo) => !todo.isComplete)
+    
   const toggle = (id) => {
     const todo = todos.find((todo) => String(todo.id) === String(id))
     const toggledTodo = { ...todo, isComplete: !todo.isComplete }
@@ -25,6 +26,7 @@ const App = () => {
       {
         id: todos.length,
         text: text,
+        isComplete: false,
       },
       ...todos,
     ])
@@ -54,7 +56,7 @@ const App = () => {
             >
               <input
                 type="checkbox"
-                value={todo.isComplete}
+                checked={todo.isComplete}
                 onChange={() => toggle(todo.id)}
                 // style={{ width: "16px", height: "16px", borderRadius: "50%" }}
               />
